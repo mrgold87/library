@@ -60,7 +60,7 @@ class MaterialController extends Controller
         return $this->render('add', compact('material', 'type', 'category'));
     }
 
-    public function actionView($id = 1)
+    public function actionView($id)
     {
         $material = Material::findOne($id);
         if (empty($material)) {
