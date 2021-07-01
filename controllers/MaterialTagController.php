@@ -8,9 +8,9 @@ use yii\web\Controller;
 
 class MaterialTagController extends Controller
 {
-    public function actionDelete($id)
+    public function actionDelete($tag_id,$material_id)
     {
-        $item = MaterialTag::find()->where(['tag_id' => $id])->one();
+        $item = MaterialTag::find()->where(['tag_id' => $tag_id])->andWhere(['material_id'=>$material_id])->one();
         if ($item) {
             if (false !== $item->delete()) {
                 \Yii::$app->session->setFlash('success', 'Тег удалён');

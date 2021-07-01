@@ -1,7 +1,6 @@
 <?php
 
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
 ?>
@@ -54,7 +53,9 @@ use yii\widgets\ActiveForm;
             </div>
             <?php ActiveForm::end(); ?>
 
-
+<!--          --><?//  echo '<pre>';
+//                print_r($material->materialtag);
+//                ?>
             <ul class="list-group mb-4">
                 <?
                 $icoTrash = ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -63,10 +64,11 @@ use yii\widgets\ActiveForm;
                             <path fill-rule="evenodd"
                                   d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>';
+
                 foreach ($material->tag as $v): ?>
                     <li class="list-group-item list-group-item-action d-flex justify-content-between">
                         <?= Html::a($v->title, ['list', 'search' => $v->title], ['class' => 'me-3']); ?>
-                        <?= Html::a($icoTrash, ['material-tag/delete', 'id' => $v->id], [
+                        <?= Html::a($icoTrash, ['material-tag/delete', 'tag_id' => $v->id, 'material_id'=>$material->id], [
                             'class' => 'text-decoration-none',
                             'data' => [
                                 'confirm' => 'Вы уверены,что хотите удалить эту ссылку?',
