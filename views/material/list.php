@@ -16,7 +16,7 @@ use yii\helpers\Url;
     <div class="col-md-8">
         <form method="get" action="<?= Url::to(['material/list']); ?>">
             <div class="input-group mb-3">
-                <input name="search" type="text" class="form-control" placeholder=""
+                <input name="search" type="text" <?= $search? 'value="'.$search.'"':''; ?> class="form-control" placeholder=""
                        aria-label="Example text with button addon" aria-describedby="button-addon1">
                 <button class="btn btn-primary" type="submit" id="button-addon1">Искать</button>
             </div>

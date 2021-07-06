@@ -52,10 +52,6 @@ use yii\widgets\ActiveForm;
                 <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
             </div>
             <?php ActiveForm::end(); ?>
-
-<!--          --><?//  echo '<pre>';
-//                print_r($material->materialtag);
-//                ?>
             <ul class="list-group mb-4">
                 <?
                 $icoTrash = ' <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -117,13 +113,13 @@ use yii\widgets\ActiveForm;
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
                 </div>
             </div>
         </div>
     </div>
-<?php $this->registerJs("
-    $('.list-group a .bi-pencil').on('click',function(){
+<?php
+$js = <<< JS
+ $('.list-group a .bi-pencil').on('click',function(){
      let data = $(this).data();
      $('#exampleModalToggle').modal('show');
      $('#exampleModalToggle').find('.modal-body').load('/web/link/update/?id='+data.id);
@@ -133,4 +129,5 @@ use yii\widgets\ActiveForm;
      $('#exampleModalToggle').modal('show');
      $('#exampleModalToggle').find('.modal-body').load('/web/link/add/?id='+data.id);
     });
-");
+JS;
+$this->registerJs($js);

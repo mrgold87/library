@@ -10,7 +10,19 @@ class MaterialTag extends ActiveRecord
     {
         return [
             [['tag_id'], 'required'],
-            [['material_id'], 'safe'],
+            [['material_id','tag_id'], 'integer'],
         ];
+    }
+    public  function isCorrectTag($tag){
+
+        if (array_key_exists( $this->tag_id,$tag))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
     }
 }

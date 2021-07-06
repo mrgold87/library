@@ -5,7 +5,6 @@ namespace app\controllers;
 use app\models\Link;
 use Yii;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 
 class LinkController extends Controller
 {

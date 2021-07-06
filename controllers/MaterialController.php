@@ -19,6 +19,7 @@ class MaterialController extends Controller
     public function actionList($search = '')
     {
         $this->view->title = 'Материалы';
+        $search = trim($search);
         if ($search) {
             $query = Material:: getSearchResult($search);
         } else {
@@ -31,7 +32,7 @@ class MaterialController extends Controller
             ],
             'sort' => false
         ]);
-        return $this->render('list', compact('dataProvider'));
+        return $this->render('list', compact('dataProvider', 'search'));
     }
 
     public function actionAdd()
@@ -70,15 +71,22 @@ class MaterialController extends Controller
             $materialTag = new MaterialTag();
             $arr = MaterialTag::find()->where(['material_id' => $id])->asArray()->all();
             $tag = Tag::getTagList($arr);
+
             $materialTag->material_id = $id;
-            if ($materialTag->load(Yii::$app->request->post()) && $materialTag->save()) {
-                Yii::$app->session->setFlash('success', 'тег добавлен');
-                return $this->refresh();
+            if ($materialTag->load(Yii::$app->request->post())) {
+              if ($materialTag->isCorrectTag($tag)){
+                if ($materialTag->save()) {
+                    Yii::$app->session->setFlash('success', 'тег добавлен');
+                    return $this->refresh();
+                }
+              }else{
+                  Yii::$app->session->setFlash('success', 'Тег не добавлен некорректные данные');
+                  return $this->refresh();
+              }
             }
             return $this->render('view', compact('material', 'materialTag', 'tag'));
         }
     }
-
     public function actionDelete($id)
     {
         $material = Material::findOne($id);
