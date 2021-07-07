@@ -21,12 +21,12 @@ class MaterialTag extends ActiveRecord
         ];
     }
     /**
-     * @param array $tag
+     * @param array $tags
      * @return true|false
      */
-    public  function isCorrectTag($tag){
+    public  function isCorrectTag($tags){
 
-        if (array_key_exists( $this->tag_id,$tag))
+        if (array_key_exists( $this->tag_id,$tags))
         {
             return true;
         }

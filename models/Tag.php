@@ -36,14 +36,17 @@ class Tag extends ActiveRecord
      * @param array $arr
      * @return array
      */
-    public static function getTagList($arr)
+    public static function filterTags($arr)
     {
+
         $params = [];
         foreach ($arr as $v) {
-            $params[] = $v['tag_id'];
+            $params[] = $v['id'];
         }
         $query = self::find()->asArray()->all();
+
         $list = ArrayHelper::map($query, 'id', 'title');
+
         $newList = [];
         foreach ($list as $k => $v) {
             if (!in_array($k, $params)) {

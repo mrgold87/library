@@ -81,11 +81,11 @@ class MaterialController extends Controller
         } else {
             $this->view->title = $material->title;
             $materialTag = new MaterialTag();
-            $arr = MaterialTag::find()->where(['material_id' => $id])->asArray()->all();
-            $tag = Tag::getTagList($arr);
+            $activeTags = $material->getTag()->asArray()->all();
+            $filteredTags = Tag::filterTags($activeTags);
             $materialTag->material_id = $id;
             if ($materialTag->load(Yii::$app->request->post())) {
-              if ($materialTag->isCorrectTag($tag)){
+              if ($materialTag->isCorrectTag($filteredTags)){
                 if ($materialTag->save()) {
                     Yii::$app->session->setFlash('success', 'тег добавлен');
                     return $this->refresh();
@@ -95,7 +95,7 @@ class MaterialController extends Controller
                   return $this->refresh();
               }
             }
-            return $this->render('view', compact('material', 'materialTag', 'tag'));
+            return $this->render('view', compact('material', 'materialTag', 'filteredTags'));
         }
     }
     /**

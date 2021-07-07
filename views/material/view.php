@@ -5,7 +5,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $material app\models\Material */
 /* @var $materialTag app\models\MaterialTag */
-/* @var $tag array */
+/* @var $filteredTags array */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <?php if (Yii::$app->session->hasFlash('success')): ?>
@@ -52,7 +52,7 @@ use yii\widgets\ActiveForm;
                         'inputOptions' =>
                             ['class' => 'form-select'],
                     ]
-                )->dropDownList($tag, ['prompt' => 'Выберите тег']); ?>
+                )->dropDownList($filteredTags, ['prompt' => 'Выберите тег']); ?>
                 <?= Html::submitButton('Добавить', ['class' => 'btn btn-primary']) ?>
             </div>
             <?php ActiveForm::end(); ?>
