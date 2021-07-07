@@ -13,6 +13,11 @@ use yii\widgets\ActiveForm;
         <?= Yii::$app->session->getFlash('success') ?>
     </div>
 <?php endif; ?>
+<?php if (Yii::$app->session->hasFlash('error')): ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <?= Yii::$app->session->getFlash('error') ?>
+    </div>
+<?php endif; ?>
     <h1 class="my-md-5 my-4"><?= HTML::encode($material->title); ?></h1>
     <div class="row mb-3">
         <div class="col-lg-6 col-md-8">

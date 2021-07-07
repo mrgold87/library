@@ -91,7 +91,7 @@ class MaterialController extends Controller
                     return $this->refresh();
                 }
               }else{
-                  Yii::$app->session->setFlash('success', 'Тег не добавлен некорректные данные');
+                  Yii::$app->session->setFlash('error', 'Тег не добавлен некорректные данные');
                   return $this->refresh();
               }
             }
