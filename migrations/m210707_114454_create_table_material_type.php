@@ -25,19 +25,4 @@ class m210707_114454_create_table_material_type extends Migration
     {
         $this->dropTable('{{%type}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m210707_114454_create_table_material_type cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

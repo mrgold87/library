@@ -25,19 +25,4 @@ class m210707_114145_create_table_tag extends Migration
     {
         $this->dropTable('{{%tag}}');
     }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
-    public function up()
-    {
-
-    }
-
-    public function down()
-    {
-        echo "m210707_114145_create_table_tag cannot be reverted.\n";
-
-        return false;
-    }
-    */
 }

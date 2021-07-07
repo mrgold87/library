@@ -15,6 +15,7 @@ use yii\web\NotFoundHttpException;
 class MaterialController extends Controller
 {
     public $defaultAction = 'list';
+
     /**
      * @param string $search
      * @return mixed
@@ -37,6 +38,7 @@ class MaterialController extends Controller
         ]);
         return $this->render('list', compact('dataProvider', 'search'));
     }
+
     /**
      * @return mixed
      */
@@ -52,6 +54,7 @@ class MaterialController extends Controller
         }
         return $this->render('add', compact('material', 'type', 'category'));
     }
+
     /**
      * @param integer $id
      * @return mixed
@@ -68,6 +71,7 @@ class MaterialController extends Controller
         }
         return $this->render('add', compact('material', 'type', 'category'));
     }
+
     /**
      * @param integer $id
      * @return mixed
@@ -85,19 +89,20 @@ class MaterialController extends Controller
             $filteredTags = Tag::filterTags($activeTags);
             $materialTag->material_id = $id;
             if ($materialTag->load(Yii::$app->request->post())) {
-              if ($materialTag->isCorrectTag($filteredTags)){
-                if ($materialTag->save()) {
-                    Yii::$app->session->setFlash('success', 'тег добавлен');
+                if ($materialTag->isCorrectTag($filteredTags)) {
+                    if ($materialTag->save()) {
+                        Yii::$app->session->setFlash('success', 'тег добавлен');
+                        return $this->refresh();
+                    }
+                } else {
+                    Yii::$app->session->setFlash('error', 'Тег не добавлен некорректные данные');
                     return $this->refresh();
                 }
-              }else{
-                  Yii::$app->session->setFlash('error', 'Тег не добавлен некорректные данные');
-                  return $this->refresh();
-              }
             }
             return $this->render('view', compact('material', 'materialTag', 'filteredTags'));
         }
     }
+
     /**
      * @param integer $id
      * @return mixed
@@ -112,6 +117,6 @@ class MaterialController extends Controller
                 \Yii::$app->session->setFlash('error', 'Ошибка при удалении материала');
             }
         }
-        return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl) ;
+        return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
     }
 }

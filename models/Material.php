@@ -14,8 +14,8 @@ use yii\db\ActiveRecord;
  *
  * @property Type $type
  * @property Category $category
- * @property Tag $tag?
- * @property Link $link?
+ * @property Tag $tag
+ * @property Link $link
  */
 class Material extends ActiveRecord
 {
