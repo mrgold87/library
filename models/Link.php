@@ -4,8 +4,16 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
+/**
+ * @property integer $id
+ * @property string $title
+ * @property string $url
+ */
 class Link extends ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -15,7 +23,9 @@ class Link extends ActiveRecord
             ['material_id', 'safe'],
         ];
     }
-
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [

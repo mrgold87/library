@@ -3,6 +3,9 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+/* @var $link \app\models\Link */
+/* @var $form yii\widgets\ActiveForm */
+
 $form = ActiveForm::begin(['id' => 'order-form']); ?>
 <?php echo $form->field($link, 'title',
     [

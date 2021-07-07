@@ -4,8 +4,24 @@ namespace app\models;
 
 use yii\db\ActiveRecord;
 
+/**
+ * @property integer $id
+ * @property string $title
+ * @property integer $type_id
+ * @property integer $category_id
+ * @property string $description
+ * @property string $author
+ *
+ * @property Type $type
+ * @property Category $category
+ * @property Tag $tag?
+ * @property Link $link?
+ */
 class Material extends ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -15,6 +31,9 @@ class Material extends ActiveRecord
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [

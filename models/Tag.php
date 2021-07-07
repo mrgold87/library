@@ -5,8 +5,15 @@ namespace app\models;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
 
+/**
+ * @property integer $id
+ * @property string $title
+ */
 class Tag extends ActiveRecord
 {
+    /**
+     * {@inheritdoc}
+     */
     public function rules()
     {
         return [
@@ -14,6 +21,9 @@ class Tag extends ActiveRecord
         ];
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function attributeLabels()
     {
         return [
@@ -22,6 +32,10 @@ class Tag extends ActiveRecord
         ];
     }
 
+    /**
+     * @param array $arr
+     * @return array
+     */
     public static function getTagList($arr)
     {
         $params = [];

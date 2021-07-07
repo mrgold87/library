@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+/* @var $material \app\models\Material */
+/* @var $type array */
+/* @var $category array */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 <h1 class="my-md-5 my-4"><?= $material->id ? 'Изменить материал' : 'Добавить материал'; ?></h1>
 <div class="row">

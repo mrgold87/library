@@ -3,6 +3,10 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+/* @var $material app\models\Material */
+/* @var $materialTag app\models\MaterialTag */
+/* @var $tag array */
+/* @var $form yii\widgets\ActiveForm */
 ?>
 <?php if (Yii::$app->session->hasFlash('success')): ?>
     <div class="alert alert-success alert-dismissible" role="alert">
@@ -64,7 +68,7 @@ use yii\widgets\ActiveForm;
                 foreach ($material->tag as $v): ?>
                     <li class="list-group-item list-group-item-action d-flex justify-content-between">
                         <?= Html::a($v->title, ['list', 'search' => $v->title], ['class' => 'me-3']); ?>
-                        <?= Html::a($icoTrash, ['material-tag/delete', 'tag_id' => $v->id, 'material_id'=>$material->id], [
+                        <?= Html::a($icoTrash, ['material-tag/delete', 'tag_id' => $v->id, 'material_id' => $material->id], [
                             'class' => 'text-decoration-none',
                             'data' => [
                                 'confirm' => 'Вы уверены,что хотите удалить эту ссылку?',

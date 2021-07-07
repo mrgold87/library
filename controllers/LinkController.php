@@ -8,6 +8,10 @@ use yii\web\Controller;
 
 class LinkController extends Controller
 {
+    /**
+     * @param integer $id
+     * @return mixed
+     */
     public function actionAdd($id)
     {
         $link = new Link();
@@ -26,7 +30,10 @@ class LinkController extends Controller
             }
         }
     }
-
+    /**
+     * @param integer $id
+     * @return mixed
+     */
     public function actionUpdate($id)
     {
         $link = Link::findOne($id);
@@ -44,7 +51,10 @@ class LinkController extends Controller
             }
         }
     }
-
+    /**
+     * @param integer $id
+     * @return mixed
+     */
     public function actionDelete($id)
     {
         $item = Link::findOne($id);

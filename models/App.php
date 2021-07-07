@@ -7,6 +7,9 @@ use yii\helpers\ArrayHelper;
 
 class App extends ActiveRecord
 {
+    /**
+     * @return array
+     */
     public static function getList()
     {
         $list = self::find()->asArray()->all();

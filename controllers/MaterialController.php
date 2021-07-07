@@ -15,7 +15,10 @@ use yii\web\NotFoundHttpException;
 class MaterialController extends Controller
 {
     public $defaultAction = 'list';
-
+    /**
+     * @param string $search
+     * @return mixed
+     */
     public function actionList($search = '')
     {
         $this->view->title = 'Материалы';
@@ -34,7 +37,9 @@ class MaterialController extends Controller
         ]);
         return $this->render('list', compact('dataProvider', 'search'));
     }
-
+    /**
+     * @return mixed
+     */
     public function actionAdd()
     {
         $this->view->title = 'Добавить материал';
@@ -47,7 +52,10 @@ class MaterialController extends Controller
         }
         return $this->render('add', compact('material', 'type', 'category'));
     }
-
+    /**
+     * @param integer $id
+     * @return mixed
+     */
     public function actionEdit($id)
     {
         $this->view->title = 'Изменить материал';
@@ -60,7 +68,11 @@ class MaterialController extends Controller
         }
         return $this->render('add', compact('material', 'type', 'category'));
     }
-
+    /**
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
     public function actionView($id)
     {
         $material = Material::findOne($id);
@@ -71,7 +83,6 @@ class MaterialController extends Controller
             $materialTag = new MaterialTag();
             $arr = MaterialTag::find()->where(['material_id' => $id])->asArray()->all();
             $tag = Tag::getTagList($arr);
-
             $materialTag->material_id = $id;
             if ($materialTag->load(Yii::$app->request->post())) {
               if ($materialTag->isCorrectTag($tag)){
@@ -87,6 +98,10 @@ class MaterialController extends Controller
             return $this->render('view', compact('material', 'materialTag', 'tag'));
         }
     }
+    /**
+     * @param integer $id
+     * @return mixed
+     */
     public function actionDelete($id)
     {
         $material = Material::findOne($id);
@@ -97,6 +112,6 @@ class MaterialController extends Controller
                 \Yii::$app->session->setFlash('error', 'Ошибка при удалении материала');
             }
         }
-        return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl);
+        return $this->redirect(Yii::$app->request->referrer ?: Yii::$app->homeUrl) ;
     }
 }

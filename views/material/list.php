@@ -4,6 +4,9 @@ use yii\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+/** @var $search string */
+/** @var $dataProvider yii\data\ActiveDataProvider */
+
 ?>
 <?php if (Yii::$app->session->hasFlash('success')): ?>
     <div class="alert alert-success alert-dismissible" role="alert">
