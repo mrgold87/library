@@ -2,11 +2,10 @@
 
 namespace app\controllers;
 
-use app\models\Category;
+use app\models\enums\MaterialCategory;
+use app\models\enums\MaterialType;
 use app\models\Material;
 use app\models\MaterialTag;
-use app\models\Tag;
-use app\models\Type;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -25,7 +24,7 @@ class MaterialController extends Controller
         $this->view->title = 'Материалы';
         $search = trim($search);
         if ($search) {
-            $query = Material:: getSearchResult($search);
+            $query = Material::getSearchResult($search);
         } else {
             $query = Material::find();
         }
@@ -46,8 +45,8 @@ class MaterialController extends Controller
     {
         $this->view->title = 'Добавить материал';
         $material = new Material();
-        $type = Type::getList();
-        $category = Category::getList();
+        $type = MaterialType::listData();
+        $category = MaterialCategory::listData();
         if ($material->load(Yii::$app->request->post()) && $material->save()) {
             Yii::$app->session->setFlash('success', 'материал сохранён');
             return $this->refresh();
@@ -63,8 +62,8 @@ class MaterialController extends Controller
     {
         $this->view->title = 'Изменить материал';
         $material = Material::findOne($id);
-        $type = Type::getList();
-        $category = Category::getList();
+        $type = MaterialType::listData();
+        $category = MaterialCategory::listData();
         if ($material->load(Yii::$app->request->post()) && $material->save()) {
             Yii::$app->session->setFlash('success', 'материал изменён');
             return $this->refresh();
@@ -85,8 +84,8 @@ class MaterialController extends Controller
         } else {
             $this->view->title = $material->title;
             $materialTag = new MaterialTag();
-            $activeTags = $material->getTag()->asArray()->all();
-            $filteredTags = Tag::filterTags($activeTags);
+            $filteredTags = MaterialTag::getFilteredTagsById($id);
+            $addedTags = MaterialTag::getAddedTagsById($id);
             $materialTag->material_id = $id;
             if ($materialTag->load(Yii::$app->request->post())) {
                 if ($materialTag->isCorrectTag($filteredTags)) {
@@ -99,7 +98,7 @@ class MaterialController extends Controller
                     return $this->refresh();
                 }
             }
-            return $this->render('view', compact('material', 'materialTag', 'filteredTags'));
+            return $this->render('view', compact('material', 'materialTag', 'filteredTags', 'addedTags'));
         }
     }
 

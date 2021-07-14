@@ -1,11 +1,14 @@
 <?php
 
+use app\models\enums\MaterialCategory;
+use app\models\enums\MaterialType;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $material app\models\Material */
 /* @var $materialTag app\models\MaterialTag */
 /* @var $filteredTags array */
+/* @var $addedTags array */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 <?php if (Yii::$app->session->hasFlash('success')): ?>
@@ -27,11 +30,11 @@ use yii\widgets\ActiveForm;
             </div>
             <div class="d-flex text-break">
                 <p class="col fw-bold mw-25 mw-sm-30 me-2">Тип</p>
-                <p class="col"><?= HTML::encode($material->type->title); ?></p>
+                <p class="col"><?= MaterialType::getLabel($material->type);?></p>
             </div>
             <div class="d-flex text-break">
                 <p class="col fw-bold mw-25 mw-sm-30 me-2">Категория</p>
-                <p class="col"><?= HTML::encode($material->category->title); ?></p>
+                <p class="col"><?= MaterialCategory::getLabel($material->category); ?></p>
             </div>
             <div class="d-flex text-break">
                 <p class="col fw-bold mw-25 mw-sm-30 me-2">Описание</p>
@@ -51,7 +54,7 @@ use yii\widgets\ActiveForm;
                 ]);; ?>
             <h3>Теги</h3>
             <div class="input-group mb-3 ">
-                <?php echo $form->field($materialTag, 'tag_id',
+                <?php echo $form->field($materialTag, 'tag',
                     [
                         'template' => '{input} {hint} {error}',
                         'inputOptions' =>
@@ -69,11 +72,10 @@ use yii\widgets\ActiveForm;
                             <path fill-rule="evenodd"
                                   d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
                         </svg>';
-
-                foreach ($material->tag as $v): ?>
+                foreach ($addedTags as $k => $v): ?>
                     <li class="list-group-item list-group-item-action d-flex justify-content-between">
-                        <?= Html::a($v->title, ['list', 'search' => $v->title], ['class' => 'me-3']); ?>
-                        <?= Html::a($icoTrash, ['material-tag/delete', 'tag_id' => $v->id, 'material_id' => $material->id], [
+                        <?= Html::a($v, ['list', 'search' => $v], ['class' => 'me-3']); ?>
+                        <?= Html::a($icoTrash, ['material-tag/delete', 'tag_id' => $k, 'material_id' => $material->id], [
                             'class' => 'text-decoration-none',
                             'data' => [
                                 'confirm' => 'Вы уверены,что хотите удалить эту ссылку?',

@@ -2,20 +2,20 @@
 
 namespace app\models;
 
+use app\models\enums\MaterialCategory;
+use app\models\enums\MaterialType;
 use yii\db\ActiveRecord;
 
 /**
  * @property integer $id
  * @property string $title
- * @property integer $type_id
- * @property integer $category_id
+ * @property integer $type
+ * @property integer $category
  * @property string $description
  * @property string $author
  *
- * @property Type $type
- * @property Category $category
- * @property Tag $tag
  * @property Link $link
+ * @property MaterialTag $materialtag
  */
 class Material extends ActiveRecord
 {
@@ -25,9 +25,11 @@ class Material extends ActiveRecord
     public function rules()
     {
         return [
-            [['type_id', 'category_id', 'title'], 'required'],
+            [['type', 'category', 'title'], 'required'],
             [['title'], 'string'],
-            [['description', 'author'], 'safe']
+            [['description', 'author'], 'safe'],
+            ['type', 'in', 'range' => MaterialType::getConstantsByName()],
+            ['category', 'in', 'range' => MaterialCategory::getConstantsByName()]
         ];
     }
 
@@ -39,31 +41,36 @@ class Material extends ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Название',
-            'type_id' => 'Тип',
-            'category_id' => 'Категория',
+            'type' => 'Тип',
+            'category' => 'Категория',
             'description' => 'Описание',
             'author' => 'Авторы',
         ];
     }
 
-    public function getType()
+    public function setCategory(MaterialCategory $type)
     {
-        return $this->hasOne(Type::class, ['id' => 'type_id']);
+        $this->category = $type->getValue();
     }
 
     public function getCategory()
     {
-        return $this->hasOne(Category::class, ['id' => 'category_id']);
+        return $this->category;
+    }
+
+    public function setType(MaterialType $type)
+    {
+        $this->type = $type->getValue();
+    }
+
+    public function getType()
+    {
+        return $this->type;
     }
 
     public function getMaterialtag()
     {
         return $this->hasMany(MaterialTag::class, ['material_id' => 'id']);
-    }
-
-    public function getTag()
-    {
-        return $this->hasMany(Tag::class, ['id' => 'tag_id'])->via('materialtag');
     }
 
     public function getLink()
@@ -73,14 +80,16 @@ class Material extends ActiveRecord
 
     public static function getSearchResult($search)
     {
+        $categories = MaterialCategory::searchByLabels($search);
+        $tags = \app\models\enums\MaterialTag::searchByLabels($search);
         return self::find()
-            ->joinWith(['category', 'tag'], true)
+            ->joinWith('materialtag', true)
             ->andFilterWhere([
                 'or',
-                ['like', 'material.title', $search],
+                ['like', 'title', $search],
                 ['like', 'author', $search],
-                ['like', 'category.title', $search],
-                ['like', 'tag.title', $search],
+                ['category' => $categories],
+                ['material_tag.tag' => $tags],
             ]);
     }
 }

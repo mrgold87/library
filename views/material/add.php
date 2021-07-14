@@ -17,14 +17,14 @@ use yii\widgets\ActiveForm;
             </div>
         <?php endif; ?>
         <?php $form = ActiveForm::begin(); ?>
-        <?php echo $form->field($material, 'type_id',
+        <?php echo $form->field($material, 'type',
             [
                 'template' => '<div class="form-floating mb-3">{input} {label} {hint} {error}</div>',
                 'inputOptions' => ['class' => 'form-select'],
                 'errorOptions' => ['class' => 'invalid-feedback d-block']
             ]
         )->dropDownList($type, ['prompt' => 'Выберите тип']); ?>
-        <?php echo $form->field($material, 'category_id',
+        <?php echo $form->field($material, 'category',
             [
                 'template' => '<div class="form-floating mb-3">{input} {label} {hint} {error}</div>',
                 'inputOptions' => ['class' => 'form-select'],
